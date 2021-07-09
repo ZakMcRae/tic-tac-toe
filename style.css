@@ -1,0 +1,17 @@
+#game-board {
+  background-color: rgb(148, 223, 223);
+  width: 500px;
+  height: 500px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.cell {
+  border: black 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 96px;
+}
