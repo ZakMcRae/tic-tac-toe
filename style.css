@@ -1,8 +1,13 @@
+body {
+  background-color: rgb(134, 134, 211);
+}
+
 #game-board {
   background-color: rgb(148, 223, 223);
   width: 500px;
   height: 500px;
   margin: auto;
+  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -15,6 +20,7 @@
   margin: auto;
   margin-top: 10px;
   border: 1px solid black;
+  border-radius: 20px;
 }
 
 #new-game-button {
@@ -75,4 +81,14 @@ h1 {
 .active {
   border-color: #ffff00 !important;
   transform: scale(1.1);
+}
+
+.winner-box {
+  background-color: rgb(148, 223, 223);
+  margin-top: 15px;
+  border: 1px solid black;
+  padding: 15px 5px;
+  font-size: 50px;
+  text-align: center;
+  border-radius: 20px;
 }

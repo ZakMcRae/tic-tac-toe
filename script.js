@@ -54,14 +54,23 @@ const gameBoard = (() => {
         const player1Name = document.querySelector('#player1-name')
         const player2Name = document.querySelector('#player2-name')
 
-        player1Name.textContent = prompt("What is Player 1's name?", 'Player 1')
-        player2Name.textContent = prompt("What is Player 2's name?", 'Player 2')
+        game.player1 = prompt("What is Player 1's name?", 'Player 1')
+        game.player2 = prompt("What is Player 2's name?", 'Player 2')
+
+        player1Name.textContent = game.player1 
+        player2Name.textContent = game.player2
     }
 
     // set event listeners to game cells
-    const playerMove = () => {
+    const setPlayerMoveEvents = () => {
         cells.forEach(cell => {
             cell.addEventListener('click', fillCell)
+        })
+    }
+
+    const removePlayerMoveEvents = () => {
+        cells.forEach( cell => {
+            cell.removeEventListener('click', fillCell)
         })
     }
 
@@ -79,12 +88,14 @@ const gameBoard = (() => {
         }
     }
 
-    return {markers, display, clear, checkForWin, setPlayerNames, playerMove}
+    return {markers, display, clear, checkForWin, setPlayerNames, setPlayerMoveEvents, removePlayerMoveEvents}
 })()
 
 const Game = () => {
     // track active player - toggles between 0 and 1 (player1: 0, player2: 1)
     let activePlayer = 0;
+    let player1 = ''
+    let player2 = ''
 
     const setNewGameButton = () => {
         const newGameButton = document.querySelector('#new-game-button')
@@ -93,6 +104,9 @@ const Game = () => {
 
     // wipe board, set playernames and display board
     const newGame = () => {
+        const winBox = document.querySelector('.winner-box')
+        if (winBox) winBox.remove()
+
         gameBoard.clear()
         gameBoard.display()
         gameBoard.setPlayerNames()
@@ -101,7 +115,7 @@ const Game = () => {
         const player1Display = document.querySelector('#player1')
         player1Display.classList.add('active')
     
-        gameBoard.playerMove()
+        gameBoard.setPlayerMoveEvents()
         game.playRound()
     }
 
@@ -120,19 +134,43 @@ const Game = () => {
     const playRound = () => {
         switch(gameBoard.checkForWin()){
             case 'X':
-                console.log('Player 1 Wins!')
+                gameBoard.display()
+                endGame(`${game.player1} Wins!`)
                 break
             
             case 'O':
-                console.log('Player 2 Wins!')
+                gameBoard.display()
+                endGame(`${game.player2} Wins!`)
                 break
 
             case 'draw':
-                console.log('Game is a Draw!')
+                gameBoard.display()
+                endGame('Game is a Draw!')
                 break
         }
 
         gameBoard.display()
+    }
+
+    function endGame(winCase){
+        gameBoard.removePlayerMoveEvents()
+        // alert(winCase)
+
+        const winBox = document.createElement('div')
+        winBox.classList.add('winner-box')
+        winBox.textContent = winCase
+
+        const infoBoard = document.querySelector('#game-info')
+        infoBoard.appendChild(winBox)
+
+        // reset css styles for next game
+        const player1Display = document.querySelector('#player1')
+        player1Display.classList.remove('active')
+        
+        const player2Display = document.querySelector('#player2')
+        player2Display.classList.remove('active')
+
+        game.activePlayer = 0
     }
 
     return {newGame, playRound, toggleActivePlayer, activePlayer, setNewGameButton}
