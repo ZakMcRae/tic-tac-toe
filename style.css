@@ -71,3 +71,8 @@ h1 {
 #player2 > span {
   padding: 2px;
 }
+
+.active {
+  border-color: #ffff00 !important;
+  transform: scale(1.1);
+}

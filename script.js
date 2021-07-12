@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-    let markers = ['O','O','X','O','X','X','O','X','O'];
+    let markers = ['X','O','X','O','X','X','O','X','O'];
     // let markers = ['','','','','','','','',''];
 
     // display markers onto gameboard
@@ -61,26 +61,35 @@ const gameBoard = (() => {
     return {markers, display, clear, checkForWin, setPlayerNames}
 })()
 
-const Player = (name) => {
-    const getName = () => name;
-    return {name, getName}
-}
-
 const Game = () => {
-    let Player1 = 'Player 1'
-    let Player2 = 'Player 2'
+    let activePlayer = 0;
 
+    // wipe board, set playernames and display board
     const newGame = () => {
         gameBoard.clear()
         gameBoard.display()
         gameBoard.setPlayerNames()
+        
+        // styling to show active player
+        const player1Display = document.querySelector('#player1')
+        player1Display.classList.add('active')
+    }
+
+    const toggleActivePlayer = () => {
+        activePlayer = 1 - activePlayer;
+        
+        const player1Display = document.querySelector('#player1')
+        player1Display.classList.toggle('active')
+        
+        const player2Display = document.querySelector('#player2')
+        player2Display.classList.toggle('active')
     }
 
     const playRound = () => {
         gameBoard.display()
     }
 
-    return {newGame, playRound}
+    return {newGame, playRound, toggleActivePlayer, activePlayer}
 }
 
 
