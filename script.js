@@ -1,5 +1,7 @@
 const gameBoard = (() => {
-    let markers = ['X','X','O','O','O','X','X','O','X'];
+    let markers = ['X','O','X','O','X','X','O','X','O'];
+
+    // display markers onto gameboard
     const display = () => {
         const cells = document.querySelectorAll('div[data-cell]')
         
@@ -8,8 +10,37 @@ const gameBoard = (() => {
         }
     }
     
+    // makes arrays for all possible win rows of 3
+    // loops through each of those arrays looking to see if there is a win
+    const checkForWin = () => {
+        const row1 = [markers[0], markers[1], markers[2]]
+        const row2 = [markers[3], markers[4], markers[5]]
+        const row3 = [markers[6], markers[7], markers[8]]
 
-    return {markers, display}
+        const col1 = [markers[0], markers[3], markers[6]]
+        const col2 = [markers[1], markers[4], markers[7]]
+        const col3 = [markers[2], markers[5], markers[8]]
+
+        const diag1 = [markers[0], markers[4], markers[8]]
+        const diag2 = [markers[2], markers[4], markers[6]]
+
+        const winRows = [row1, row2, row3, col1, col2, col3, diag1, diag2]
+
+        for (let i=0; i < winRows.length; i++){
+            // skip check if row has a blank
+            if (winRows[i].includes('')){
+                continue
+            }
+
+            // check if every element is the same value (aka a win)
+            if (winRows[i].every((val, i, arr) => val == arr[0])){
+                return true
+            }
+        } 
+            return false
+        }
+
+    return {markers, display, checkForWin}
 })()
 
 const Player = (name) => {
@@ -20,7 +51,11 @@ const Player = (name) => {
 const Game = () => {
     let round = 1;
     const playRound = () => {
+        gameBoard.display()
     }
+
+    return {round, playRound}
 }
 
-gameBoard.display()
+game = Game()
+game.playRound()
