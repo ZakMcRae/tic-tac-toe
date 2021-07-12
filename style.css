@@ -19,10 +19,11 @@
 
 #new-game-button {
   background-color: rgb(134, 134, 211);
-  width: 90px;
+  width: 120px;
   height: 45px;
   border: 2px white solid;
   border-radius: 10px;
+  font-size: 20px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -44,4 +45,28 @@
 
 h1 {
   text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+#player1,
+#player2 {
+  background-color: rgb(134, 134, 211);
+  margin: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  border: 2px white solid;
+  border-radius: 10px;
+  color: white;
+}
+
+#player1 > span,
+#player2 > span {
+  padding: 2px;
 }
