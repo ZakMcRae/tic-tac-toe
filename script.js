@@ -50,7 +50,15 @@ const gameBoard = (() => {
             return false
         }
 
-    return {markers, display, clear, checkForWin}
+    const setPlayerNames = () => {
+        const player1Name = document.querySelector('#player1-name')
+        const player2Name = document.querySelector('#player2-name')
+
+        player1Name.textContent = prompt("What is Player 1's name?", 'Player 1')
+        player2Name.textContent = prompt("What is Player 2's name?", 'Player 2')
+    }
+
+    return {markers, display, clear, checkForWin, setPlayerNames}
 })()
 
 const Player = (name) => {
@@ -59,23 +67,25 @@ const Player = (name) => {
 }
 
 const Game = () => {
-    let round = 1;
+    let Player1 = 'Player 1'
+    let Player2 = 'Player 2'
 
     const newGame = () => {
         gameBoard.clear()
         gameBoard.display()
+        gameBoard.setPlayerNames()
     }
 
     const playRound = () => {
         gameBoard.display()
     }
 
-    return {round, newGame, playRound}
+    return {newGame, playRound}
 }
 
 
 game = Game()
-game.playRound()
+gameBoard.display()
 
 const newGameButton = document.querySelector('#new-game-button')
 newGameButton.addEventListener('click', game.newGame)
