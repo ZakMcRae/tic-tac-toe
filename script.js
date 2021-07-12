@@ -1,5 +1,6 @@
 const gameBoard = (() => {
     let markers = ['O','O','X','O','X','X','O','X','O'];
+    // let markers = ['','','','','','','','',''];
 
     // display markers onto gameboard
     const display = () => {
@@ -10,6 +11,11 @@ const gameBoard = (() => {
         }
     }
     
+    // resest board to all blanks for new game
+    const clear = () => {
+        markers = ['','','','','','','','','']
+    }
+
     // makes arrays for all possible win rows of 3
     // loops through each of those arrays looking to see if there is a win
     const checkForWin = () => {
@@ -44,7 +50,7 @@ const gameBoard = (() => {
             return false
         }
 
-    return {markers, display, checkForWin}
+    return {markers, display, clear, checkForWin}
 })()
 
 const Player = (name) => {
@@ -54,14 +60,22 @@ const Player = (name) => {
 
 const Game = () => {
     let round = 1;
+
+    const newGame = () => {
+        gameBoard.clear()
+        gameBoard.display()
+    }
+
     const playRound = () => {
         gameBoard.display()
     }
 
-    return {round, playRound}
+    return {round, newGame, playRound}
 }
+
 
 game = Game()
 game.playRound()
 
-console.log(gameBoard.checkForWin())
+const newGameButton = document.querySelector('#new-game-button')
+newGameButton.addEventListener('click', game.newGame)
