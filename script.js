@@ -1,11 +1,11 @@
 const gameBoard = (() => {
-    let markers = ['X','O','X','O','X','X','O','X','O'];
-    // let markers = ['','','','','','','','',''];
+    // let markers = ['X','O','X','O','X','X','O','X','O'];
+    let markers = ['','','','','','','','',''];
+
+    const cells = document.querySelectorAll('div[data-cell]')
 
     // display markers onto gameboard
     const display = () => {
-        const cells = document.querySelectorAll('div[data-cell]')
-        
         for(let i=0; i < markers.length; i++){
             cells[i].textContent = markers[i]
         }
@@ -58,11 +58,38 @@ const gameBoard = (() => {
         player2Name.textContent = prompt("What is Player 2's name?", 'Player 2')
     }
 
-    return {markers, display, clear, checkForWin, setPlayerNames}
+    // set event listeners to game cells
+    const playerMove = () => {
+        cells.forEach(cell => {
+            cell.addEventListener('click', fillCell)
+        })
+    }
+
+    // set marker to cell depending on player or if already marked
+    const fillCell = (e) => {
+        const cellIndex = e.target.getAttribute('data-cell')
+        if (!(markers[cellIndex] == '')) {
+            return            
+        } else{
+            markers[cellIndex] = game.activePlayer ? 'O' : 'X'
+
+            // swtich players and start next round
+            game.toggleActivePlayer()
+            game.playRound()
+        }
+    }
+
+    return {markers, display, clear, checkForWin, setPlayerNames, playerMove}
 })()
 
 const Game = () => {
+    // track active player - toggles between 0 and 1 (player1: 0, player2: 1)
     let activePlayer = 0;
+
+    const setNewGameButton = () => {
+        const newGameButton = document.querySelector('#new-game-button')
+        newGameButton.addEventListener('click', game.newGame)
+    }
 
     // wipe board, set playernames and display board
     const newGame = () => {
@@ -73,10 +100,15 @@ const Game = () => {
         // styling to show active player
         const player1Display = document.querySelector('#player1')
         player1Display.classList.add('active')
+    
+        gameBoard.playerMove()
+        game.playRound()
     }
 
+    // toggles back and forth - also gives styling via css
     const toggleActivePlayer = () => {
-        activePlayer = 1 - activePlayer;
+        game.activePlayer = 1 - game.activePlayer;
+        
         
         const player1Display = document.querySelector('#player1')
         player1Display.classList.toggle('active')
@@ -86,15 +118,27 @@ const Game = () => {
     }
 
     const playRound = () => {
+        switch(gameBoard.checkForWin()){
+            case 'X':
+                console.log('Player 1 Wins!')
+                break
+            
+            case 'O':
+                console.log('Player 2 Wins!')
+                break
+
+            case 'draw':
+                console.log('Game is a Draw!')
+                break
+        }
+
         gameBoard.display()
     }
 
-    return {newGame, playRound, toggleActivePlayer, activePlayer}
+    return {newGame, playRound, toggleActivePlayer, activePlayer, setNewGameButton}
 }
 
 
 game = Game()
-gameBoard.display()
+game.setNewGameButton()
 
-const newGameButton = document.querySelector('#new-game-button')
-newGameButton.addEventListener('click', game.newGame)
