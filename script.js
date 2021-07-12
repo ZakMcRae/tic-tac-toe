@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-    let markers = ['X','O','X','O','X','X','O','X','O'];
+    let markers = ['O','O','X','O','X','X','O','X','O'];
 
     // display markers onto gameboard
     const display = () => {
@@ -34,9 +34,13 @@ const gameBoard = (() => {
 
             // check if every element is the same value (aka a win)
             if (winRows[i].every((val, i, arr) => val == arr[0])){
-                return true
+                return winRows[i][0]
             }
         } 
+        
+        // if no empty markers and no win - return draw
+        // else returns false if no win and game no finished
+        if (!markers.includes('')) return 'draw'
             return false
         }
 
@@ -59,3 +63,5 @@ const Game = () => {
 
 game = Game()
 game.playRound()
+
+console.log(gameBoard.checkForWin())
