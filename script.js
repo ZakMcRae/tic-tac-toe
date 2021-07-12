@@ -1,5 +1,4 @@
 const gameBoard = (() => {
-    // let markers = ['X','O','X','O','X','X','O','X','O'];
     let markers = ['','','','','','','','',''];
 
     const cells = document.querySelectorAll('div[data-cell]')
@@ -54,8 +53,8 @@ const gameBoard = (() => {
         const player1Name = document.querySelector('#player1-name')
         const player2Name = document.querySelector('#player2-name')
 
-        game.player1 = prompt("What is Player 1's name?", 'Player 1')
-        game.player2 = prompt("What is Player 2's name?", 'Player 2')
+        game.player1 = prompt("What is Player 1's name?", game.player1)
+        game.player2 = prompt("What is Player 2's name?", game.player2)
 
         player1Name.textContent = game.player1 
         player2Name.textContent = game.player2
@@ -94,8 +93,8 @@ const gameBoard = (() => {
 const Game = () => {
     // track active player - toggles between 0 and 1 (player1: 0, player2: 1)
     let activePlayer = 0;
-    let player1 = ''
-    let player2 = ''
+    let player1 = 'Player 1'
+    let player2 = 'Player 2'
 
     const setNewGameButton = () => {
         const newGameButton = document.querySelector('#new-game-button')
