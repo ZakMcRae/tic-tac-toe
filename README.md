@@ -6,7 +6,7 @@ Check it out [here](https://zakmcrae.github.io/tic-tac-toe/).
 This is a simple tic-tac-toe game.
 Hit the new game button, enter player names and then click on your square choice when your name is highlighted!
 
-![](https://i.imgur.com/U8A8wGg.png)
+[![](https://i.imgur.com/U8A8wGg.png)](https://zakmcrae.github.io/tic-tac-toe/)
 
 ## Learned on project
 - good practice for learing Javascript fundamentals
